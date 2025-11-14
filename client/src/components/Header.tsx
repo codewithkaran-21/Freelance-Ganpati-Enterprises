@@ -1,7 +1,7 @@
 import { Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import logoImage from "@assets/generated_images/Ganpati_Enterprises_logo_design_fe3f1eed.png";
+import logoImage from "@assets/generated_images/Lord_Ganesha_business_logo_e2e60418.png";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <img src={logoImage} alt="Ganpati Enterprises" className="h-10 w-10 rounded-md" />
+          <img src={logoImage} alt="Ganpati Enterprises" className="h-12 w-12" />
           <div className="flex flex-col">
             <span className="text-lg font-semibold text-foreground">Ganpati Enterprises</span>
             <span className="hidden text-xs text-muted-foreground sm:block">Your Energy Partner</span>

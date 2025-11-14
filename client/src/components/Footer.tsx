@@ -1,5 +1,5 @@
 import { SiWhatsapp, SiFacebook, SiInstagram } from "react-icons/si";
-import logoImage from "@assets/generated_images/Ganpati_Enterprises_logo_design_fe3f1eed.png";
+import logoImage from "@assets/generated_images/Lord_Ganesha_business_logo_e2e60418.png";
 
 export default function Footer() {
   const scrollToSection = (id: string) => {
@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <div className="mb-4 flex items-center gap-3">
-              <img src={logoImage} alt="Ganpati Enterprises" className="h-10 w-10 rounded-md" />
+              <img src={logoImage} alt="Ganpati Enterprises" className="h-12 w-12" />
               <span className="text-lg font-semibold">Ganpati Enterprises</span>
             </div>
             <p className="mb-4 text-sm text-muted-foreground">
