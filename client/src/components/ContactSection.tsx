@@ -8,6 +8,9 @@ import { Mail, MapPin, Phone } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import type { InsertQuoteRequest } from "@shared/schema";
 
 export default function ContactSection() {
   const { toast } = useToast();
@@ -19,14 +22,30 @@ export default function ContactSection() {
     message: "",
   });
 
+  const createQuoteMutation = useMutation({
+    mutationFn: async (data: InsertQuoteRequest) => {
+      const res = await apiRequest("POST", "/api/quote-requests", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Quote Request Received",
+        description: "We'll contact you shortly with a detailed quotation.",
+      });
+      setFormData({ name: "", phone: "", email: "", service: "", message: "" });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Submission Failed",
+        description: error.message || "Please try again later.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Quote request submitted:", formData);
-    toast({
-      title: "Quote Request Received",
-      description: "We'll contact you shortly with a detailed quotation.",
-    });
-    setFormData({ name: "", phone: "", email: "", service: "", message: "" });
+    createQuoteMutation.mutate(formData);
   };
 
   return (
@@ -55,6 +74,7 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
+                    disabled={createQuoteMutation.isPending}
                     data-testid="input-name"
                   />
                 </div>
@@ -68,6 +88,7 @@ export default function ContactSection() {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     required
+                    disabled={createQuoteMutation.isPending}
                     data-testid="input-phone"
                   />
                 </div>
@@ -80,13 +101,19 @@ export default function ContactSection() {
                     placeholder="your.email@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    disabled={createQuoteMutation.isPending}
                     data-testid="input-email"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="service">Service Interest *</Label>
-                  <Select value={formData.service} onValueChange={(value) => setFormData({ ...formData, service: value })} required>
+                  <Select 
+                    value={formData.service} 
+                    onValueChange={(value) => setFormData({ ...formData, service: value })} 
+                    required
+                    disabled={createQuoteMutation.isPending}
+                  >
                     <SelectTrigger id="service" data-testid="select-service">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
@@ -109,12 +136,18 @@ export default function ContactSection() {
                     rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    disabled={createQuoteMutation.isPending}
                     data-testid="textarea-message"
                   />
                 </div>
 
-                <Button type="submit" className="w-full" data-testid="button-submit-quote">
-                  Request Free Quote
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={createQuoteMutation.isPending}
+                  data-testid="button-submit-quote"
+                >
+                  {createQuoteMutation.isPending ? "Submitting..." : "Request Free Quote"}
                 </Button>
               </form>
             </CardContent>
@@ -130,11 +163,11 @@ export default function ContactSection() {
                   <Phone className="mt-1 h-5 w-5 text-primary" />
                   <div>
                     <p className="font-medium">Phone</p>
-                    <a href="tel:6392133510" className="text-muted-foreground hover:text-foreground">
+                    <a href="tel:6392133510" className="text-muted-foreground hover:text-foreground" data-testid="link-contact-phone-1">
                       6392133510
                     </a>
                     <br />
-                    <a href="tel:7800509693" className="text-muted-foreground hover:text-foreground">
+                    <a href="tel:7800509693" className="text-muted-foreground hover:text-foreground" data-testid="link-contact-phone-2">
                       7800509693
                     </a>
                   </div>
@@ -144,7 +177,7 @@ export default function ContactSection() {
                   <Mail className="mt-1 h-5 w-5 text-primary" />
                   <div>
                     <p className="font-medium">Email</p>
-                    <a href="mailto:ganpatienterprises864@gmail.com" className="text-muted-foreground hover:text-foreground">
+                    <a href="mailto:ganpatienterprises864@gmail.com" className="text-muted-foreground hover:text-foreground" data-testid="link-contact-email">
                       ganpatienterprises864@gmail.com
                     </a>
                   </div>
@@ -172,6 +205,7 @@ export default function ContactSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-foreground"
+                      data-testid="link-contact-whatsapp"
                     >
                       Chat with us on WhatsApp
                     </a>

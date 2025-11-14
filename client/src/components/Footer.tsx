@@ -52,27 +52,27 @@ export default function Footer() {
             <h3 className="mb-4 font-semibold">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <button onClick={() => scrollToSection("home")} className="text-muted-foreground hover:text-foreground" data-testid="link-footer-home">
+                <button onClick={() => scrollToSection("home")} className="text-muted-foreground hover:text-foreground" data-testid="button-footer-home">
                   Home
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection("services")} className="text-muted-foreground hover:text-foreground" data-testid="link-footer-products">
+                <button onClick={() => scrollToSection("services")} className="text-muted-foreground hover:text-foreground" data-testid="button-footer-products">
                   Products & Services
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection("solutions")} className="text-muted-foreground hover:text-foreground" data-testid="link-footer-solutions">
+                <button onClick={() => scrollToSection("solutions")} className="text-muted-foreground hover:text-foreground" data-testid="button-footer-solutions">
                   Solutions
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection("about")} className="text-muted-foreground hover:text-foreground" data-testid="link-footer-about">
+                <button onClick={() => scrollToSection("about")} className="text-muted-foreground hover:text-foreground" data-testid="button-footer-about">
                   About Us
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollToSection("contact")} className="text-muted-foreground hover:text-foreground" data-testid="link-footer-contact">
+                <button onClick={() => scrollToSection("contact")} className="text-muted-foreground hover:text-foreground" data-testid="button-footer-contact">
                   Contact
                 </button>
               </li>
@@ -83,17 +83,17 @@ export default function Footer() {
             <h3 className="mb-4 font-semibold">Contact Details</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <a href="tel:6392133510" className="hover:text-foreground">
+                <a href="tel:6392133510" className="hover:text-foreground" data-testid="link-footer-phone-1">
                   Phone: 6392133510
                 </a>
               </li>
               <li>
-                <a href="tel:7800509693" className="hover:text-foreground">
+                <a href="tel:7800509693" className="hover:text-foreground" data-testid="link-footer-phone-2">
                   Phone: 7800509693
                 </a>
               </li>
               <li>
-                <a href="mailto:ganpatienterprises864@gmail.com" className="hover:text-foreground">
+                <a href="mailto:ganpatienterprises864@gmail.com" className="hover:text-foreground" data-testid="link-footer-email">
                   ganpatienterprises864@gmail.com
                 </a>
               </li>

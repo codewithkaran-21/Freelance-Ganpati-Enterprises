@@ -1,37 +1,35 @@
-import { type User, type InsertUser } from "@shared/schema";
+import { type QuoteRequest, type InsertQuoteRequest } from "@shared/schema";
 import { randomUUID } from "crypto";
 
-// modify the interface with any CRUD methods
-// you might need
-
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createQuoteRequest(quoteRequest: InsertQuoteRequest): Promise<QuoteRequest>;
+  getAllQuoteRequests(): Promise<QuoteRequest[]>;
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<string, User>;
+  private quoteRequests: Map<string, QuoteRequest>;
 
   constructor() {
-    this.users = new Map();
+    this.quoteRequests = new Map();
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
-  }
-
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
+  async createQuoteRequest(insertQuoteRequest: InsertQuoteRequest): Promise<QuoteRequest> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+    const quoteRequest: QuoteRequest = {
+      ...insertQuoteRequest,
+      id,
+      createdAt: new Date(),
+      email: insertQuoteRequest.email || null,
+      message: insertQuoteRequest.message || null,
+    };
+    this.quoteRequests.set(id, quoteRequest);
+    return quoteRequest;
+  }
+
+  async getAllQuoteRequests(): Promise<QuoteRequest[]> {
+    return Array.from(this.quoteRequests.values()).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
+    );
   }
 }
 
